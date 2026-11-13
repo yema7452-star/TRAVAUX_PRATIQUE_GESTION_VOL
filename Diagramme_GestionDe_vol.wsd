@@ -1,0 +1,71 @@
+@startuml
+skinparam classAttributeIconSize 0
+class Passager {
+- id : int
+- nom : string
+- prenom : string
+- passeport : string
+- telephone : string
++ Passager(id, nom, prenom, passeport, telephone)
++ getId() : int
++ afficher() : void
+}
+class Vol {
+- numeroVol : string
+- villeDepart : string
+- villeArrivee : string
+- dateVol : string
+- capacite : int
+- nbReserves : int
+- prix : double
++ Vol(numeroVol, depart, arrivee, date, capacite, prix)
++ getNumero() : string
++ getPrix() : double
++ estDisponible() : bool
++ incrementer() : void
++ decrementer() : void
++ afficher() : void
+}
+class Reservation {
+- id : int
+- idPassager : int
+- numeroVol : string
+- statut : string
++ Reservation(id, idPassager, numeroVol)
++ getId() : int
++ payer() : void
++ annuler() : void
++ afficher() : void
+}
+class Paiement {
+- id : int
+- idReservation : int
+- montant : double
+- statutRemboursement : string
++ Paiement(id, idReservation, montant)
++ rembourser(type) : void
++ afficher() : void
+}
+class Agence {
+- passagers : vector<Passager>
+- vols : vector<Vol>
+- reservations : vector<Reservation>
+- paiements : vector<Paiement>
++ enregistrerPassager() : void
++ ajouterVol() : void
++ afficherVolsDisponibles() : void
++ rechercherVol() : void
++ effectuerReservation() : void
++ enregistrerPaiement() : void
++ annulerReservation() : void
++ consulterReservations() : void
++ afficherInfosReservation() : void
+}
+Passager "1" -- "0..*" Reservation : effectue >
+Vol "1" -- "0..*" Reservation : concerne >
+Reservation "1" -- "0..1" Paiement : paye par >
+Agence "1" -- "0..*" Passager : gere >
+Agence "1" -- "0..*" Vol : gere >
+Agence "1" -- "0..*" Reservation : gere >
+Agence "1" -- "0..*" Paiement : gere >
+@enduml
